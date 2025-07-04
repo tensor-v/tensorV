@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'layer_node.dart';
+import 'theme/colors.dart';
 
 class CanvasPage extends StatefulWidget {
   const CanvasPage({super.key});
@@ -83,12 +84,27 @@ class _CanvasPageState extends State<CanvasPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Blueprint Editor"),
+        backgroundColor: AppColors.appBar,
+        title: const Text(
+          "Keras V",
+          style: TextStyle(
+            color: AppColors.textPrimary, // 원하는 텍스트 색상으로 지정
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+        ),
         actions: [
           TextButton.icon(
-            icon: const Icon(Icons.add, color: Colors.orange),
-            label: const Text("Create New Node", style: TextStyle(color: Colors.orange)),
+            icon: const Icon(Icons.add, color: AppColors.textSecondary),
+            label: const Text("Create New Node", style: TextStyle(color: AppColors.textSecondary)),
             onPressed: showCreateNodeDialog,
+            style: TextButton.styleFrom(
+              backgroundColor: Colors.white, // 원하는 배경색
+              // 필요하면 패딩이나 모서리 둥글게 등 추가 가능
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
           ),
         ],
       ),
