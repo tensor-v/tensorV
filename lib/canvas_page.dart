@@ -37,6 +37,11 @@ class _CanvasPageState extends State<CanvasPage> {
               child: DraggableNode(
                 id: entry.key,
                 title: "${entry.key} Node",
+                description: "description",
+                parameters: {
+                  "units": 64,
+                  "activation": "relu",
+                },
                 onDrag: (delta) => updateNodePosition(entry.key, delta),
               ),
             );
