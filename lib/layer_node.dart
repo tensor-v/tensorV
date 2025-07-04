@@ -39,13 +39,14 @@ class DraggableNode extends StatelessWidget {
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
+                color: AppColors.textPrimary,
               ),
             ),
             const SizedBox(height: 4),
             // 설명
             Text(
               description,
-              style: const TextStyle(fontSize: 12, color: Colors.black87),
+              style: const TextStyle(fontSize: 12, color: AppColors.textSecondary),
             ),
             const Divider(),
             // 파라미터 테이블
@@ -62,14 +63,14 @@ class DraggableNode extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(vertical: 2),
                       child: Text(
                         entry.key,
-                        style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+                        style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.textPrimary),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 2),
                       child: Text(
                         entry.value.toString(),
-                        style: const TextStyle(fontSize: 12),
+                        style: const TextStyle(fontSize: 12, color: AppColors.textSecondary),
                       ),
                     ),
                   ],
