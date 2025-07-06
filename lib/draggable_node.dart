@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'node_data.dart';
+import 'node_edit.dart';
 import 'theme/colors.dart';
 
 class DraggableNode extends StatelessWidget {
@@ -29,10 +30,9 @@ class DraggableNode extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
           boxShadow: const [BoxShadow(color: AppColors.shadow, blurRadius: 4)],
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-          ],
+        child: NodeEdit(
+          data: data,
+          editable: false,
         ),
       ),
     );

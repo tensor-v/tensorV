@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'node_data.dart';
+import 'node_edit.dart';
 
 
 class CreateNodeDialog extends StatefulWidget {
@@ -50,6 +51,13 @@ class _CreateNodeDialogState extends State<CreateNodeDialog> {
               }
             },
           ),
+          SizedBox(
+            height: 300,
+            child: NodeEdit(
+              data: selectedData,
+              editable: true
+            ),
+          )
         ],
       ),
       actions: [
