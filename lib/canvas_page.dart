@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'layer_node.dart';
-import 'node_edit.dart';
+import 'draggable_node.dart';
+import 'create_node_dialog.dart';
 import 'theme/colors.dart';
 
 class CanvasPage extends StatefulWidget {
@@ -11,25 +11,26 @@ class CanvasPage extends StatefulWidget {
 }
 
 class _CanvasPageState extends State<CanvasPage> {
-  final Map<String, Offset> nodePositions = {
-    'input': const Offset(100, 100),
-    'dense': const Offset(300, 200),
-  };
-
-  void updateNodePosition(String id, Offset delta) {
-    setState(() {
-      nodePositions[id] = nodePositions[id]! + delta;
-    });
-  }
+  final Set<DraggableNode> nodes = {};
+  String selectedType = "Dense";
 
   // 다이얼로그 호출 함수
   void showCreateNodeDialog() {
-    String selectedType = 'Dense';
-    final TextEditingController paramController = TextEditingController();
-
     showDialog(
       context: context,
-      builder: (_) => NodeEditDialog(),
+      builder: (_) => CreateNodeDialog(
+        onConfirm: (data) => {
+          setState(() {
+            nodes.add(DraggableNode(
+              data: data,
+              onDrag: (delta) => {
+                setState(() {})
+              },
+              position: Offset(100, 200)
+            ));
+          })
+        }
+      )
     );
   }
 
@@ -41,7 +42,7 @@ class _CanvasPageState extends State<CanvasPage> {
         title: const Text(
           "Keras V",
           style: TextStyle(
-            color: AppColors.textPrimary, // 원하는 텍스트 색상으로 지정
+            color: AppColors.textPrimary,
             fontWeight: FontWeight.bold,
             fontSize: 20,
           ),
@@ -52,8 +53,7 @@ class _CanvasPageState extends State<CanvasPage> {
             label: const Text("Create New Node", style: TextStyle(color: AppColors.textSecondary)),
             onPressed: showCreateNodeDialog,
             style: TextButton.styleFrom(
-              backgroundColor: Colors.white, // 원하는 배경색
-              // 필요하면 패딩이나 모서리 둥글게 등 추가 가능
+              backgroundColor: AppColors.background,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
               ),
@@ -66,21 +66,11 @@ class _CanvasPageState extends State<CanvasPage> {
         minScale: 0.1,
         maxScale: 5.0,
         child: Stack(
-          children: nodePositions.entries.map((entry) {
+          children: nodes.map((entry) {
             return Positioned(
-              left: entry.value.dx,
-              top: entry.value.dy,
-              child: DraggableNode(
-                id: entry.key,
-                data: NodeData(
-                  title: "${entry.key} Node",
-                  description: "description",
-                  parameters: {
-                    "units": 64,
-                    "activation": "relu",
-                  }),
-                onDrag: (delta) => updateNodePosition(entry.key, delta),
-              ),
+              left: entry.position.dx,
+              top: entry.position.dy,
+              child: entry
             );
           }).toList(),
         ),
