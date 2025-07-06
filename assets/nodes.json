@@ -1,0 +1,22 @@
+{
+  "Dense": {
+    "name": "Dense",
+    "description": "Just your regular densely-connected NN layer.",
+    "parameters": {
+      "units": {
+        "name": "units",
+        "type": "int",
+        "required": true,
+        "default": "",
+        "description": "Positive integer, dimensionality of the output space."
+      },
+      "activation": {
+        "name": "activation",
+        "type": "string",
+        "required": false,
+        "default": "None",
+        "description": "Activation function to use. If you don't specify anything, no activation is applied (ie. \"linear\" activation: a(x) = x)."
+      }
+    }
+  }
+}

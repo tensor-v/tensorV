@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
 import 'canvas_page.dart';
+import 'node_data.dart';
 
-void main() {
-  runApp(const MyApp());
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  try {
+    NodeData.nodeDataMap = await loadNodeData();
+  } catch (e, stack) {
+    print("❌ Failed to load node data: $e");
+    print(stack);
+  }
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {

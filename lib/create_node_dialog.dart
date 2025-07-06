@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'node_data.dart';
 import 'node_edit.dart';
 
-
 class CreateNodeDialog extends StatefulWidget {
   final void Function(NodeData data) onConfirm;
 
@@ -18,14 +17,7 @@ class CreateNodeDialog extends StatefulWidget {
 
 class _CreateNodeDialogState extends State<CreateNodeDialog> {
   String selectedType = "Dense";
-  NodeData selectedData = NodeData(
-    name: "Dense",
-    description: "Simple Fully Connected Layer",
-    parameters: {
-      "units": 64,
-      "activation": "relu"
-    }
-  );
+  NodeData selectedData = NodeData.nodeDataMap['Dense']!;
 
   @override
   Widget build(BuildContext context) {
