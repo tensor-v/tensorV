@@ -1,20 +1,27 @@
 import 'package:flutter/material.dart';
 import 'theme/colors.dart';
 
-
-class DraggableNode extends StatelessWidget {
-  final String id;
+class NodeData {
   final String title;
   final String description;
   final Map<String, Object> parameters;
+  NodeData({
+    required this.title,
+    required this.description,
+    required this.parameters
+  });
+}
+
+
+class DraggableNode extends StatelessWidget {
+  final String id;
   final void Function(Offset delta) onDrag;
+  final NodeData data;
 
   const DraggableNode({
     super.key,
     required this.id,
-    required this.title,
-    required this.description,
-    required this.parameters,
+    required this.data,
     required this.onDrag,
   });
 
@@ -35,7 +42,7 @@ class DraggableNode extends StatelessWidget {
           children: [
             // 제목
             Text(
-              title,
+              data.title,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
@@ -45,7 +52,7 @@ class DraggableNode extends StatelessWidget {
             const SizedBox(height: 4),
             // 설명
             Text(
-              description,
+              data.description,
               style: const TextStyle(fontSize: 12, color: AppColors.textSecondary),
             ),
             const Divider(),
@@ -56,7 +63,7 @@ class DraggableNode extends StatelessWidget {
                 1: FlexColumnWidth(),
               },
               defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-              children: parameters.entries.map((entry) {
+              children: data.parameters.entries.map((entry) {
                 return TableRow(
                   children: [
                     Padding(

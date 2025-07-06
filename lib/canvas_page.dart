@@ -29,14 +29,7 @@ class _CanvasPageState extends State<CanvasPage> {
 
     showDialog(
       context: context,
-      builder: (_) => NodeEditDialog(
-        initialType: 'Dense',
-        initialParams: '',
-        onConfirm: (type, params) {
-          // 여기에 노드 추가 로직 작성
-          print('New node: $type with $params');
-        },
-      ),
+      builder: (_) => NodeEditDialog(),
     );
   }
 
@@ -79,12 +72,13 @@ class _CanvasPageState extends State<CanvasPage> {
               top: entry.value.dy,
               child: DraggableNode(
                 id: entry.key,
-                title: "${entry.key} Node",
-                description: "description",
-                parameters: {
-                  "units": 64,
-                  "activation": "relu",
-                },
+                data: NodeData(
+                  title: "${entry.key} Node",
+                  description: "description",
+                  parameters: {
+                    "units": 64,
+                    "activation": "relu",
+                  }),
                 onDrag: (delta) => updateNodePosition(entry.key, delta),
               ),
             );
