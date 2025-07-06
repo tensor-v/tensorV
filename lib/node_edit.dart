@@ -17,36 +17,80 @@ class NodeEdit extends StatefulWidget {
 
 class _NodeEditState extends State<NodeEdit> {
   late TextEditingController _nameController;
+  late Map<String, TextEditingController> _paramControllers;
 
   @override
   void initState() {
     super.initState();
+
     _nameController = TextEditingController(text: widget.data.name);
+
+    _paramControllers = {
+      for (final entry in widget.data.parameters.entries)
+        entry.key: TextEditingController(text: entry.value.defaultValue.toString() ?? "")
+    };
   }
 
   @override
   void dispose() {
     _nameController.dispose();
+    for (final controller in _paramControllers.values) {
+      controller.dispose();
+    }
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        widget.editable ?
-          TextField(
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          widget.editable
+              ? TextField(
             controller: _nameController,
             decoration: const InputDecoration(labelText: 'Node Name'),
-          ):
-          Text(
-            widget.data.name
-          ),
-        const SizedBox(height: 16),
-        Text(
-          widget.data.description
-        )
-      ],
+          )
+              : Text(widget.data.name, style: Theme.of(context).textTheme.headlineSmall),
+          const SizedBox(height: 16),
+          Text(widget.data.description, style: const TextStyle(color: Colors.grey)),
+
+          const Divider(height: 32),
+
+          ...widget.data.parameters.entries.map((entry) {
+            final paramName = entry.key;
+            final param = entry.value;
+
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextField(
+                  controller: _paramControllers[paramName],
+                  decoration: InputDecoration(
+                    labelText: paramName,
+                    helperText: param.description,
+                    suffixText: param.required ? '*' : null,
+                  ),
+                  keyboardType: _getKeyboardType(param.type),
+                ),
+                const SizedBox(height: 12),
+              ],
+            );
+          }).toList(),
+        ],
+      ),
     );
   }
+
+  TextInputType _getKeyboardType(ParamType type) {
+    switch (type) {
+      case ParamType.int:
+      case ParamType.double:
+        return TextInputType.number;
+      default:
+        return TextInputType.text;
+    }
+  }
 }
+
