@@ -34,7 +34,7 @@ class ParamInfo {
   final ParamType type;
   final bool required;
   final String description;
-  final List<String>? options;
+  final List<Object?>? options;
   final Object? defaultValue;
   Object? value;
 

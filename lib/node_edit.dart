@@ -59,16 +59,15 @@ class _NodeEditState extends State<NodeEdit> {
           const Divider(height: 32),
 
           ...widget.data.parameters.entries.map((entry) {
-            final paramName = entry.key;
             final param = entry.value;
 
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextField(
-                  controller: _paramControllers[paramName],
+                  controller: _paramControllers[param.name],
                   decoration: InputDecoration(
-                    labelText: paramName,
+                    labelText: param.name,
                     helperText: param.description,
                     suffixText: param.required ? '*' : null,
                   ),
