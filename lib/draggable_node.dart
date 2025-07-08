@@ -5,6 +5,7 @@ import 'theme/colors.dart';
 
 class DraggableNode extends StatelessWidget {
   final void Function(Offset delta) onDrag;
+  final VoidCallback onTap;
   final NodeData data;
   Offset position;
 
@@ -12,6 +13,7 @@ class DraggableNode extends StatelessWidget {
     super.key,
     required this.data,
     required this.onDrag,
+    required this.onTap,
     required this.position
   });
 
@@ -22,6 +24,7 @@ class DraggableNode extends StatelessWidget {
         position += details.delta;
         onDrag(details.delta);
       },
+      onTap: onTap,
       child: Container(
         width: 200,
         padding: const EdgeInsets.all(10),

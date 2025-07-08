@@ -1,6 +1,8 @@
 
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:convert';
+import 'package:equatable/equatable.dart'; // 동일성 비교를 위한 패키지
+import 'package:uuid/uuid.dart'; // 고유 ID 생성을 위한 패키지
 
 Future<Map<String, NodeData>> loadNodeData() async {
   final jsonString = await rootBundle.loadString('assets/nodes.json');
@@ -59,8 +61,9 @@ class ParamInfo {
   }
 }
 
-class NodeData {
+class NodeData extends Equatable {
   static Map<String, NodeData> nodeDataMap = {};
+  final String id;
   final String name;
   final String description;
   final Map<String, ParamInfo> parameters;
@@ -68,11 +71,14 @@ class NodeData {
   NodeData({required this.name, required this.description, required this.parameters});
 
   factory NodeData.fromJson(Map<String, dynamic> json) {
+    final String nodeId = json['id'] as String? ?? Uuid().v4(); // id 필드 추가. JSON에 없으면 UUID 생성
+
     return NodeData(
-      name: json['name'],
-      description: json['description'],
-      parameters: (json['parameters'] as Map<String, dynamic>).map((key, value) {
-        return MapEntry(key, ParamInfo.fromJson(value));
+        id: nodeId,
+        name: json['name'],
+        description: json['description'],
+        parameters: (json['parameters'] as Map<String, dynamic>).map((key, value) {
+          return MapEntry(key, ParamInfo.fromJson(value));
       })
     );
   }
