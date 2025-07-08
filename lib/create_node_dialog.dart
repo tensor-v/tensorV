@@ -16,8 +16,7 @@ class CreateNodeDialog extends StatefulWidget {
 
 
 class _CreateNodeDialogState extends State<CreateNodeDialog> {
-  String selectedType = "Dense";
-  NodeData selectedData = NodeData.nodeDataMap['Dense']!;
+  NodeData selectedData = (NodeData.nodeDataMap['Dense']!).copy();
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +26,7 @@ class _CreateNodeDialogState extends State<CreateNodeDialog> {
         mainAxisSize: MainAxisSize.min,
         children: [
           DropdownButtonFormField<String>(
-            value: selectedType,
+            value: 'Dense',
             decoration: const InputDecoration(labelText: 'Node Type'),
             items: ['Dense', 'Conv2D', 'Dropout']
                 .map((type) => DropdownMenuItem(
@@ -38,7 +37,7 @@ class _CreateNodeDialogState extends State<CreateNodeDialog> {
             onChanged: (value) {
               if (value != null) {
                 setState(() {
-                  selectedType = value;
+                  selectedData = (NodeData.nodeDataMap[value]!).copy();
                 });
               }
             },

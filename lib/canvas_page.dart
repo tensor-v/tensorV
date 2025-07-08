@@ -15,7 +15,6 @@ class CanvasPage extends StatefulWidget {
 class _CanvasPageState extends State<CanvasPage> {
   // 노드들을 List로 관리하여 순서 제어가 가능하도록 합니다.
   final List<DraggableNode> nodes = [];
-  String selectedType = "Dense"; // 이 변수가 사용되지 않으면 제거하거나 용도를 확인해보세요.
 
   // 다이얼로그를 표시하고 새로운 노드를 생성하는 함수
   void showCreateNodeDialog() {
@@ -48,6 +47,7 @@ class _CanvasPageState extends State<CanvasPage> {
     setState(() {
       // 탭된 노드를 찾습니다.
       final tappedNodeIndex = nodes.indexWhere((node) => node.data == nodeData);
+      print(tappedNodeIndex);
       if (tappedNodeIndex != -1) {
         final tappedNode = nodes[tappedNodeIndex];
         // 리스트에서 해당 노드를 제거합니다.

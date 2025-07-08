@@ -63,7 +63,7 @@ class ParamInfo {
 
 class NodeData extends Equatable {
   static Map<String, NodeData> nodeDataMap = {};
-  final String id;
+  final Uuid id = Uuid();
   final String name;
   final String description;
   final Map<String, ParamInfo> parameters;
@@ -71,10 +71,8 @@ class NodeData extends Equatable {
   NodeData({required this.name, required this.description, required this.parameters});
 
   factory NodeData.fromJson(Map<String, dynamic> json) {
-    final String nodeId = json['id'] as String? ?? Uuid().v4(); // id 필드 추가. JSON에 없으면 UUID 생성
 
     return NodeData(
-        id: nodeId,
         name: json['name'],
         description: json['description'],
         parameters: (json['parameters'] as Map<String, dynamic>).map((key, value) {
@@ -82,4 +80,14 @@ class NodeData extends Equatable {
       })
     );
   }
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [id];
+
+  NodeData copy() => NodeData(
+    name: name,
+    description: description,
+    parameters: parameters
+  );
 }
