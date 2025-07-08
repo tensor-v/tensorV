@@ -10,7 +10,7 @@ Future<Map<String, NodeData>> loadNodeData() async {
   });
 }
 
-enum ParamType { int, double, string, bool, list, dict }
+enum ParamType { int, double, string, bool, options }
 
 ParamType parseParamType(String type) {
   switch (type) {
@@ -22,10 +22,8 @@ ParamType parseParamType(String type) {
       return ParamType.string;
     case "bool":
       return ParamType.bool;
-    case "list":
-      return ParamType.list;
-    case "dict":
-      return ParamType.dict;
+    case "options":
+      return ParamType.options;
     default:
       throw Exception("Unknown type: $type");
   }
@@ -35,23 +33,28 @@ class ParamInfo {
   final String name;
   final ParamType type;
   final bool required;
-  final Object? defaultValue;
   final String description;
+  final List<String>? options;
+  final Object? defaultValue;
+  Object? value;
 
   ParamInfo({
     required this.name,
     required this.type,
     required this.required,
-    required this.defaultValue,
-    required this.description});
+    required this.description,
+    this.options,
+    this.defaultValue
+  });
 
   factory ParamInfo.fromJson(Map<String, dynamic> json) {
     return ParamInfo(
       name: json['name'],
       type: parseParamType(json['type']),
       required: json['required'],
-      defaultValue: json['default'],
-      description: json['description']
+      description: json['description'],
+      options: json['options'],
+      defaultValue: json['defaultValue']
     );
   }
 }

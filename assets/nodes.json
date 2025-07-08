@@ -7,14 +7,14 @@
         "name": "units",
         "type": "int",
         "required": true,
-        "default": "",
         "description": "Positive integer, dimensionality of the output space."
       },
       "activation": {
         "name": "activation",
-        "type": "string",
+        "type": "options",
+        "options": [null, "relu", "sigmoid", "softmax"],
+        "defaultValue": null,
         "required": false,
-        "default": "None",
         "description": "Activation function to use. If you don't specify anything, no activation is applied (ie. \"linear\" activation: a(x) = x)."
       }
     }
