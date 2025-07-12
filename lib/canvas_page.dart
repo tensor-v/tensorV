@@ -38,11 +38,13 @@ class _CanvasPageState extends State<CanvasPage> {
     setState(() {
       // 탭된 노드를 찾습니다.
       final tappedNodeIndex = nodes.indexWhere((node) => node.data == nodeData.data);
-      print(tappedNodeIndex);
       if (tappedNodeIndex != -1) {
         final tappedNode = nodes[tappedNodeIndex];
         nodes.removeAt(tappedNodeIndex);
         nodes.add(tappedNode);
+        for(NodeInstance node in nodes) {
+          print(node.data.id);
+        }
       }
     });
   }
