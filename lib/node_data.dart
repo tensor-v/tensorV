@@ -63,12 +63,17 @@ class ParamInfo {
 
 class NodeData extends Equatable {
   static Map<String, NodeData> nodeDataMap = {};
-  final Uuid id = Uuid();
+  final String id;
   final String name;
   final String description;
   final Map<String, ParamInfo> parameters;
 
-  NodeData({required this.name, required this.description, required this.parameters});
+  NodeData({
+    String? id,
+    required this.name,
+    required this.description,
+    required this.parameters
+  }): id = id ?? const Uuid().v4();
 
   factory NodeData.fromJson(Map<String, dynamic> json) {
 
