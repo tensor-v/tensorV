@@ -12,11 +12,12 @@
       "activation": {
         "name": "activation",
         "type": "options",
-        "options": [null, "relu", "sigmoid", "softmax"],
-        "defaultValue": null,
+        "options": ["None", "relu", "sigmoid", "softmax"],
+        "defaultValue": "None",
         "required": false,
         "description": "Activation function to use. If you don't specify anything, no activation is applied (ie. \"linear\" activation: a(x) = x)."
       }
-    }
+    },
+    "url": {}
   }
 }
